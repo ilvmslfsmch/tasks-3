@@ -1,5 +1,6 @@
-#include <iostream>
 #pragma once
+#include <iosfwd>
+#include <string>
 
 /**
  * @brief Класс Matrix(массив)
@@ -24,8 +25,20 @@ private:
 	 int** arr;
 public:
 
+	 /**
+	  * @brief Конструктор по умолчанию
+	  */
+	 Matrix();
+
+	 /**
+	  * @brief Конструктор матрицы rows * columns, заполненой нулями (создание матрицы из размеров)
+	  * @param rows - количество строк массива
+	  * @param columns - количество столбцов массива
+	  */
+	 Matrix(const size_t rows, const size_t columns);
+
 	/**
-	 * @brief Конструктор матрицы
+	 * @brief Конструктор матрицы из уже готовых данных
 	 * @param row - количество строк матрицы
 	 * @param columns - количество столбцов матрицы
 	 * @param arr - указатель на массив
@@ -42,7 +55,7 @@ public:
 	 * @brief конструктор перемещения
 	 * @param other - ссылка на другую (временную) матрицу
 	 */
-	Matrix (Matrix&& other);
+	Matrix (Matrix&& other) noexcept;
 
 	/**
 	 * @brief Деструктор
@@ -61,7 +74,7 @@ public:
 	 * @param other - ссылка на другую (временную) матрицу
 	 * @return ссылку на перемещенную матрицу
 	 */
-	Matrix& operator= (Matrix&& other);
+	Matrix& operator= (Matrix&& other) noexcept;
 
 	/**
 	 * @brief перегрузка оператора сдвига слево
@@ -69,7 +82,7 @@ public:
 	 * @param M - ссылка на матрицу M
 	 * @return перегруженный поток вывода
 	 */
-	friend std::ostream& operator<< (std::ostream& os, const Martix& M);
+	friend std::ostream& operator<< (std::ostream& os, const Matrix& M);
 
 	/**
 	 * @brief перегрузка оператора сдвига вправо
@@ -77,7 +90,7 @@ public:
 	 * @param M - ссылка на матрицу M
 	 * @return перегруженный поток ввода
 	 */
-	friend std::istream& operator>> (std::istream& is, const Matrix& M);
+	friend std::istream& operator>> (std::istream& is, Matrix& M);
 
 	/**
 	 * @brief оператор "равно"
@@ -92,4 +105,36 @@ public:
 	 * @return 1 - если матрицы не равны, иначе 0
 	 */
 	bool operator!= (const Matrix& other) const;
+
+	/**
+	 * @brief Вывести содержимое вектора в строку
+	 * @return Содержимое строки
+	 */
+	std::string toString() const;
+
+	/**
+	 * @brief Получить указатель на строку по индексу (только чтение)
+	 * @param index - номер элемента
+	 * @return элемент по индексу
+	 */
+	const int* operator[] (const size_t index) const;
+
+	/**
+	 * @brief получить указатель на строку по индексу
+	 * @param index - номер элемента
+	 * @return элемент по индексу
+	 */
+	int* operator[] (size_t index);
+
+	/**
+	 * @brief Функция получение количества строк массива
+	 * @return число строк
+	 */
+	size_t getRows() const noexcept;
+
+	/**
+	 * @brief Функция получения количества столбцов массива
+	 * @return чисто столбцов
+	 */
+	size_t getColumns() const noexcept;
 };
