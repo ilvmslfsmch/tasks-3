@@ -35,7 +35,7 @@ public:
 	  * @param rows - количество строк массива
 	  * @param columns - количество столбцов массива
 	  */
-	 Matrix(const size_t rows, const size_t columns);
+	 Matrix(const size_t r, const size_t c);
 
 	/**
 	 * @brief Конструктор матрицы из уже готовых данных
@@ -43,7 +43,7 @@ public:
 	 * @param columns - количество столбцов матрицы
 	 * @param arr - указатель на массив
 	 */
-	Matrix (int** arr, const size_t row, const size_t columns);
+//	Matrix (int** arr, const size_t rows, const size_t columns);
 
 	/**
 	 * @brief Конструктор копирования

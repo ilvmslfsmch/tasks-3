@@ -4,7 +4,7 @@
 
 Matrix::Matrix() : rows(0), columns(0), arr(nullptr) {}
 
-Matrix::Matrix(const size_t rows, const size_t columns) : rows(rows), columns(columns), arr(nullptr) {
+Matrix::Matrix(const size_t r, const size_t c) : rows(r), columns(c), arr(nullptr) {
 	if (rows == 0 || columns == 0) {
 		return;
 	}
@@ -64,8 +64,77 @@ Matrix& Matrix::operator=(Matrix&& other) noexcept {
 	return *this;
 }
 
-size_t Matrix::getRows() const noexcept {return rows};
+size_t Matrix::getRows() const noexcept {return rows;};
 
-size_t Matrix::getColumns() const noexcept {return columns};
+size_t Matrix::getColumns() const noexcept {return columns;};
 
+int* Matrix::operator[] (size_t row_index) {
+	return arr[row_index];
+}
 
+const int* Matrix::operator[] (const size_t row_index) const {
+	return arr[row_index];
+}
+
+std::string Matrix::toString() const {
+	std::string result;
+	if (rows == 0 || columns == 0) {
+		return result;
+	}
+	for (size_t i = 0; i < rows; i++) {
+		for (size_t j = 0; j < columns; j++) {
+			result += std::to_string(arr[i][j]);
+			if (j + 1 < columns) {
+				result += ' ';
+			}
+		}
+		if (i + 1 < rows) {
+			result += '\n';
+		}
+	}
+
+	return result;		
+}
+
+bool Matrix::operator== (const Matrix& other) const {
+	if (rows != other.rows) return false;
+	if (columns != other.columns) return false;
+	for (size_t i = 0; i < rows; i++) {
+		for (size_t j = 0; j < columns; j++) {
+			if (arr[i][j] != other.arr[i][j]) return false;
+		}
+	}
+	return true;
+}
+
+bool Matrix::operator!= (const Matrix& other) const {
+	return !(*this == other);
+}
+
+std::ostream& operator<< (std::ostream& os, const Matrix& M) {
+	os << M.getRows() << ' ' << M.getColumns() << '\n';
+	os << M.toString();
+	return os;
+}
+
+std::istream& operator>> (std::istream& is, Matrix& M) {
+	size_t newRows = 0;
+	size_t newColumns = 0;
+	is >> newRows >> newColumns;
+	if (!is) return is;
+	if ((newRows == 0) != (newColumns == 0) ) {
+		is.setstate(std::ios::failbit);
+		return is;
+	} else if (newRows == 0 && newColumns == 0){
+		M = Matrix();
+		return is;
+	}
+	Matrix temp(newRows, newColumns);
+	for (size_t i = 0; i < newRows; i++) {
+		for (size_t j = 0; j < newColumns; j++) {
+			if (!(is >> temp[i][j])) return is;
+		}
+	}
+	M = std::move(temp);
+	return is;
+}
