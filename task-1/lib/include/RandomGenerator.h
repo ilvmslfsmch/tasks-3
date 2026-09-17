@@ -1,1 +1,40 @@
-//
+#pragma once
+
+#include <random>
+
+#include "Generator.h"
+
+/**
+ * @brief Генератор случайных чисел в диапазоне от minValue до maxValue
+ */
+class RandomGenerator : public Generator {
+	private:
+		/**
+		 * @brief Минимальное значения диапазона генерации
+		 */
+		int minValue;
+
+		/**
+		 * @brief Максимальное значение диапазона генерации
+		 */
+		int maxValue;
+
+		/**
+		 * @brief Движок генерации псевдослучайных чисел
+		 */
+		std::mt19937 engine;
+
+		/**
+		 * @brief Распределение (?) для движка
+		 */
+		std::uniform_int_distribution<int> distribution;
+	public:
+		/**
+		 * @brief 
+		 */
+		RandomGenerator(int minVal, int maxVal);
+
+		~RandomGenerator() override = default;
+
+		int generate() override;
+};

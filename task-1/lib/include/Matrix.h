@@ -2,6 +2,8 @@
 #include <iosfwd>
 #include <string>
 
+#include "Generator.h"
+
 /**
  * @brief Класс Matrix(массив)
  */
@@ -32,18 +34,10 @@ public:
 
 	 /**
 	  * @brief Конструктор матрицы rows * columns, заполненой нулями (создание матрицы из размеров)
-	  * @param rows - количество строк массива
-	  * @param columns - количество столбцов массива
+	  * @param r - количество строк массива
+	  * @param c - количество столбцов массива
 	  */
 	 Matrix(const size_t r, const size_t c);
-
-	/**
-	 * @brief Конструктор матрицы из уже готовых данных
-	 * @param row - количество строк матрицы
-	 * @param columns - количество столбцов матрицы
-	 * @param arr - указатель на массив
-	 */
-//	Matrix (int** arr, const size_t rows, const size_t columns);
 
 	/**
 	 * @brief Конструктор копирования
@@ -124,7 +118,7 @@ public:
 	 * @param index - номер элемента
 	 * @return элемент по индексу
 	 */
-	int* operator[] (size_t index);
+	int* operator[] (const size_t index);
 
 	/**
 	 * @brief Функция получение количества строк массива
@@ -137,4 +131,10 @@ public:
 	 * @return чисто столбцов
 	 */
 	size_t getColumns() const noexcept;
+
+	/**
+	 * @brief Заполнение массива, используя абстрактный класс Generator
+	 * @param generator - результат выполнения функции Generator
+	 */
+	void fillArray(Generator& generator);
 };
