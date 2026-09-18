@@ -64,9 +64,9 @@ Matrix& Matrix::operator=(Matrix&& other) noexcept {
 	return *this;
 }
 
-size_t Matrix::getRows() const noexcept {return rows};
+size_t Matrix::getRows() const noexcept {return rows;}
 
-size_t Matrix::getColumns() const noexcept {return columns;};
+size_t Matrix::getColumns() const noexcept {return columns;}
 
 int* Matrix::operator[] (size_t row_index) {
 	return arr[row_index];
