@@ -2,6 +2,8 @@
 
 #include "../include/Task1Exercise.h"
 
+Task1Exercise::Task1Exercise(Matrix& src, Generator& gen) : Exercise(src, gen) {}
+
 Matrix Task1Exercise::solve() {
 	Matrix result(source);
 

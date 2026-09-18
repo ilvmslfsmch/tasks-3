@@ -30,11 +30,20 @@ class RandomGenerator : public Generator {
 		std::uniform_int_distribution<int> distribution;
 	public:
 		/**
-		 * @brief 
+		 * @brief Конструктор
+		 * @param minVal - минимальное значение диапазона
+		 * @param maxVal - максимальное значение иапазона
 		 */
 		RandomGenerator(int minVal, int maxVal);
 
+		/**
+		 * @brief Перегруженный деструктор
+		 */
 		~RandomGenerator() override = default;
 
+		/**
+		 * @brief Генерация случайного числа
+		 * @return сгенерированное число
+		 */
 		int generate() override;
 };
