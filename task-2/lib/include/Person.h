@@ -7,10 +7,11 @@ class Person {
 		int id;
 		std::string fullName;
 		std::string birthDate;
+		static int nextId;
 
 	public:
 		Person();
-		Person(int id, std::string fullName, std::string birthDate);
+		Person(std::string fullName, std::string birthDate);
 		virtual ~Person() = default;
 
 		int getId() const noexcept;

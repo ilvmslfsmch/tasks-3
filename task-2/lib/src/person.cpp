@@ -1,9 +1,11 @@
 #include "../include/Person.h"
 #include <utility>
 
-Person::Person() : id(0) {}
+int Person::nextId = 1;
 
-Person::Person(int id, std::string fullName, std::string birthDate) : id(id), fullName(std::move(fullName)), birthDate(std::move(birthDate)) {}
+Person::Person() : id(nextId++) {}
+
+Person::Person(std::string fullName, std::string birthDate) : id(nextId++), fullName(std::move(fullName)), birthDate(std::move(birthDate)) {}
 
 int Person::getId() const noexcept {return id;}
 

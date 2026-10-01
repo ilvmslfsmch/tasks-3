@@ -3,11 +3,11 @@
 
 Employee::Employee() : Person(), rate(1.0), pensioner(false), disabled(false), onVacation(false), onMaternityLeave(false) {}
 
-Employee::Employee(int id, std::string fullName, std::string birthDate, std::string position, std::string department, double rate) : Person(id, std::move(fullName), std::move(birthDate)), position(std::move(position)), department(std::move(department)), rate(rate), pensioner(false), disabled(false), onVacation(false), onMaternityLeave(false) {}
+Employee::Employee(std::string fullName, std::string birthDate, Position position, Department department, double rate) : Person(std::move(fullName), std::move(birthDate)), position(std::move(position)), department(std::move(department)), rate(rate), pensioner(false), disabled(false), onVacation(false), onMaternityLeave(false) {}
 
-std::string Employee::getPosition() const noexcept {return position;}
+const Position& Employee::getPosition() const noexcept {return position;}
 
-std::string Employee::getDepartment() const noexcept {return department;}
+const Department& Employee::getDepartment() const noexcept {return department;}
 
 double Employee::getRate() const noexcept {return rate;}
 
@@ -42,8 +42,8 @@ bool Employee::isOnMaternityLeave() const noexcept {return onMaternityLeave;}
 
 std::string Employee::getInfo() const {
 	std::string result = Person::getInfo();
-	result += " | Должность: " + position;
-	result += " | Отдел: " + department;
+	result += " | Должность: " + position.getTitle();
+	result += " | Отдел: " + department.getName();
 	result += " | Ставка: " + std::to_string(rate);
 	result += " | Дети: ";
 	result += hasChildren() ? std::to_string(childrenIds.size()) : "Нет";

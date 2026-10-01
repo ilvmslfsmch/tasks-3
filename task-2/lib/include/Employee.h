@@ -1,12 +1,14 @@
 #pragma once
 #include "Person.h"
+#include "Position.h"
+#include "Department.h"
 #include "PreviousWorkplace.h"
 #include <vector>
 
 class Employee : public Person {
 	private:
-		std::string position;
-		std::string department;
+		Position position;
+		Department department;
 		double rate;
 		std::vector<PreviousWorkplace> previousWorkplace;
 		std::vector<int> childrenIds;
@@ -18,9 +20,9 @@ class Employee : public Person {
 
 	public:
 		Employee();
-		Employee(int id, std::string fullName, std::string birthDate, std::string position, std::string department, double rate);
-		std::string getPosition() const noexcept;
-		std::string getDepartment() const noexcept;
+		Employee(std::string fullName, std::string birthDate, Position position, Department department, double rate);
+		const Position& getPosition() const noexcept;
+		const Department& getDepartment() const noexcept;
 		double getRate() const noexcept;
 		const std::vector<PreviousWorkplace>& getPreviousWorkplaces() const noexcept;
 		const std::vector<int>& getChildrenIds() const noexcept;
