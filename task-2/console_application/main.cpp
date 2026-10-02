@@ -1,6 +1,10 @@
 #include <iostream>
 #include "../lib/include/HRDepartment.h"
 
+/**
+ * @brief Точка входа в программу
+ * @return 0, если программа выполнена корректно
+ */
 int main(void) {
 	HRDepartment hr;
 
