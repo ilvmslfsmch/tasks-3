@@ -12,7 +12,7 @@ void HRDepartment::addDepartment(const Department& department) {
 }
 
 void HRDepartment::addPosition(const Position& position) {
-	Positions.push_back(position);
+	positions.push_back(position);
 }
 
 const std::vector<std::unique_ptr<Person>>& HRDepartment::getPeople() const noexcept {
@@ -107,7 +107,7 @@ void HRDepartment::printPreviousWorkplaces() const {
 		if (!emp) continue;
 		std::cout << emp->getFullName() << ":" << std::endl;
 		for (const auto& wp : emp->getPreviousWorkplaces()) {
-			std::cout <<wp.toString() << std::endl;
+			std::cout << "  " << wp.toString() << std::endl;
 		}
 	}
 }

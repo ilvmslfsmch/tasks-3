@@ -10,7 +10,7 @@ class HRDepartment {
 	private:
 		std::vector<std::unique_ptr<Person>> people;
 		std::vector<Department> departments;
-		std::vector<Position> Positions;
+		std::vector<Position> positions;
 	public:
 		void addPerson(std::unique_ptr<Person> person);
 		void addDepartment(const Department& department);
