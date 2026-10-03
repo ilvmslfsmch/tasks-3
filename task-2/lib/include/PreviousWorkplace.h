@@ -1,0 +1,61 @@
+#pragma once
+
+#include <string>
+
+/**
+ * @brief класс PreviousWorkplace
+ */
+class PreviousWorkplace {
+	private:
+		/**
+		 * @brief Название компании
+		 */
+		std::string company;
+
+		/**
+		 * @brief должность
+		 */
+		std::string position;
+
+		/**
+		 * @brief период работы
+		 */
+		std::string period;
+	public:
+		/**
+		 * @brief Конструктор по умолчанию
+		 */
+		PreviousWorkplace() = default;
+
+		/**
+		 * @brief Конструктор
+		 * @param company - компания
+		 * @param position - должность
+		 * @param period - период работы
+		 */
+		PreviousWorkplace(std::string company, std::string position, std::string period);
+
+		/**
+		 * @brief Получить имя компании
+		 * @return имя компании
+		 */
+		std::string getCompany() const noexcept;
+
+		/**
+		 * @brief Получить должность
+		 * @return должность
+		 */
+		std::string getPosition() const noexcept;
+
+		/**
+		 * @brief получить период работы
+		 * @return период работы
+		 */
+		std::string getPeriod() const noexcept;
+
+		/**
+		 * @brief получить строку с предыдущим местом работы
+		 * @return строка с предыдущим местом работы
+		 */
+		std::string toString() const;
+};
