@@ -23,11 +23,11 @@ void Employee::addPreviousWorkplace(const PreviousWorkplace& wp) {
 	previousWorkplace.push_back(wp);
 }
 
-void Employee::addChildId(int childId) {
+void Employee::addChildId(const int childId) {
 	childrenIds.push_back(childId);
 }
 
-void Employee::setFlags(bool pensioner, bool disabled, bool onVacation, bool onMaternityLeave) {
+void Employee::setFlags(const bool pensioner, const bool disabled, const bool onVacation, const bool onMaternityLeave) {
 	this -> pensioner = pensioner;
 	this -> disabled = disabled;
 	this -> onVacation = onVacation;

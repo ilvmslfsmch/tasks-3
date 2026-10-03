@@ -111,7 +111,7 @@ class Employee : public Person {
 		 * @brief Функция добавления ребёнка по ID
 		 * @param childId - ID ребёнка
 		 */
-		void addChildId(int childId);
+		void addChildId(const int childId);
 
 		/**
 		 * @brief Функция присвоения флагов сотруднику
@@ -120,7 +120,7 @@ class Employee : public Person {
 		 * @param onVacation - флаг "В отпуске"
 		 * @param onMaternityLeave - флаг "В декрете"
 		 */
-		void setFlags(bool pensioner, bool disabled, bool onVacation, bool onMaternityLeave);
+		void setFlags(const bool pensioner, const bool disabled, const bool onVacation, const bool onMaternityLeave);
 
 		/**
 		 * @brief функция проверки наличия детей у сотрудника

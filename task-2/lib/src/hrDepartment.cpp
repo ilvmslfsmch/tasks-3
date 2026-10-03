@@ -34,7 +34,7 @@ void HRDepartment::printByPosition(const std::string& positionTitle) const {
 	}
 }
 
-void HRDepartment::printByRate(double rate) const {
+void HRDepartment::printByRate(const double rate) const {
 	for (const auto& p : people) {
 		auto emp = dynamic_cast<Employee*>(p.get());
 		if (emp && emp->getRate() == rate) {
@@ -123,7 +123,7 @@ void HRDepartment::printByFullName(const std::string& fullName) const {
 	}
 }
 
-void HRDepartment::printChildrenOf(int parentId) const {
+void HRDepartment::printChildrenOf(const int parentId) const {
 	auto parentIt = std::find_if(people.begin(), people.end(), [parentId](const std::unique_ptr<Person>& p) {
 				return p->getId() == parentId;
 			});

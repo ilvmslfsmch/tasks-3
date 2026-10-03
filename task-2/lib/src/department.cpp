@@ -3,5 +3,5 @@
 
 Department::Department(std::string name) : name(std::move(name)) {}
 
-std::string Department::getName() const noexcept {return name;}
+const std::string Department::getName() const noexcept {return name;}
 

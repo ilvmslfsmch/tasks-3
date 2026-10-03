@@ -65,7 +65,7 @@ class HRDepartment {
 		 * @brief Вывести сотрудников по ставке
 		 * @param rate - ставка
 		 */
-		void printByRate(double rate) const;
+		void printByRate(const double rate) const;
 
 		/**
 		 * @brief Вывести сотрудников с детьми
@@ -112,5 +112,5 @@ class HRDepartment {
 		 * @brief Вывести детей сотрудника
 		 * @param parentId - ID сотрудника
 		 */
-		void printChildrenOf(int parentId) const;
+		void printChildrenOf(const int parentId) const;
 };
