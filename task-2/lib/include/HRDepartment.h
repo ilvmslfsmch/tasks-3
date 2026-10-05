@@ -32,9 +32,33 @@ class HRDepartment {
 		HRDepartment() = default;
 
 		/**
-		 * @bried Деструктор
+		 * @brief Деструктор
 		 */
 		~HRDepartment();
+
+		/**
+		* @brief Запрет копирования
+		* @note Запреты нужны, так как класс владеет Person через сырые указатели
+		* @note Копирование (явное/неявное) приведёт к двойному удалению
+		* @note Дальше по той же причине.
+		*/
+		HRDepartment(const HRDepartment&) = delete;
+
+		/**
+		* @brief Запрет присваивания копированием
+		*/
+		HRDepartment& operator=(const HRDepartment) = delete;
+
+		/**
+		* @brief Запрет перемещения
+		* @note Для единообразия: раз не копируем, то и не перемешаем
+		*/
+		HRDepartment(HRDepartment&&) = delete;
+
+		/**
+		* @brief Запрет присваивания перемещением
+		*/
+		HRDepartment& operator=(HRDepartment&&) = delete;
 
 		/**
 		 * @brief Добавить нового сотрудника
