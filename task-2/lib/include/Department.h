@@ -20,7 +20,7 @@ class Department {
 		 * @brief Конструктор
 		 * @param name - название департамента
 		 */
-		explicit Department(std::string name);
+		explicit Department(const std::string name);
 
 		/**
 		 * @brief Получить название департамента

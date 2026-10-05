@@ -38,7 +38,7 @@ class Person {
 		 * @param fullName - ФИО
 		 * @param birthDate - дата рождения
 		 */
-		Person(std::string fullName, std::string birthDate);
+		Person(const std::string fullName, const std::string birthDate);
 
 		/**
 		 * @brief Виртуальный деструктор

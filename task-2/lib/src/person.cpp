@@ -5,7 +5,7 @@ int Person::nextId = 1;
 
 Person::Person() : id(nextId++) {}
 
-Person::Person(std::string fullName, std::string birthDate) : id(nextId++), fullName(std::move(fullName)), birthDate(std::move(birthDate)) {}
+Person::Person(const std::string fullName, const std::string birthDate) : id(nextId++), fullName(fullName), birthDate(birthDate) {}
 
 int Person::getId() const noexcept {return id;}
 

@@ -69,7 +69,7 @@ class Employee : public Person {
 		 * @param department - отдел
 		 * @param rate - ставка
 		 */
-		Employee(std::string fullName, std::string birthDate, Position position, Department department, double rate);
+		Employee(const std::string& fullName, const std::string& birthDate, const Position& position, const Department& department, const double rate);
 
 		/**
 		 * @brief Получить должность сотрудника

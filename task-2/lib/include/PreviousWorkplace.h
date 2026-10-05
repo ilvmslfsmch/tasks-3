@@ -33,7 +33,7 @@ class PreviousWorkplace {
 		 * @param position - должность
 		 * @param period - период работы
 		 */
-		PreviousWorkplace(std::string company, std::string position, std::string period);
+		PreviousWorkplace(const std::string company, const std::string position, const std::string period);
 
 		/**
 		 * @brief Получить имя компании

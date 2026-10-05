@@ -4,7 +4,6 @@
 #include "Department.h"
 #include "Position.h"
 #include <vector>
-#include <memory>
 
 /**
  * @brief Класс HRDepartment
@@ -14,7 +13,7 @@ class HRDepartment {
 		/**
 		 * @brief Массив указателей на сотрудников
 		 */
-		std::vector<std::unique_ptr<Person>> people;
+		std::vector<Person*> people;
 
 		/**
 		 * @brief Массив департаментов
@@ -26,11 +25,22 @@ class HRDepartment {
 		 */
 		std::vector<Position> positions;
 	public:
+
+		/**
+		* @brief Конструктор по умолчанию
+		*/
+		HRDepartment() = default;
+
+		/**
+		 * @bried Деструктор
+		 */
+		~HRDepartment();
+
 		/**
 		 * @brief Добавить нового сотрудника
 		 * @param person - указатель на сотрудника
 		 */
-		void addPerson(std::unique_ptr<Person> person);
+		void addPerson(Person* person);
 
 		/**
 		 * @brief Добавить отдел
@@ -48,7 +58,7 @@ class HRDepartment {
 		 * @brief Получить список сотрудников в отделе
 		 * @return ссылку на массив сотрудников
 		 */
-		const std::vector<std::unique_ptr<Person>>& getPeople() const noexcept;
+		const std::vector<Person*>& getPeople() const noexcept;
 
 		/**
 		 * @brief Вывести всех сотрудников
