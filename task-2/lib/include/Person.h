@@ -55,13 +55,13 @@ class Person {
 		 * @brief получить ФИО человека
 		 * @return ФИО человека
 		 */
-		std::string getFullName() const noexcept;
+		const std::string& getFullName() const noexcept;
 
 		/**
 		 * @brief получить дату рождения
 		 * @return Дата рождения
 		 */
-		std::string getBirthDate() const noexcept;
+		const std::string& getBirthDate() const noexcept;
 
 		/**
 		 * @brief виртуальный метод получения информации

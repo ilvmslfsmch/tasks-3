@@ -47,7 +47,7 @@ class HRDepartment {
 		/**
 		* @brief Запрет присваивания копированием
 		*/
-		HRDepartment& operator=(const HRDepartment) = delete;
+		HRDepartment& operator=(const HRDepartment&) = delete;
 
 		/**
 		* @brief Запрет перемещения

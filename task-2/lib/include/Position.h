@@ -28,6 +28,6 @@ class Position {
 		 * @brief получить название должности
 		 * @return название должности
 		 */
-		const std::string getTitle() const noexcept;
+		const std::string& getTitle() const noexcept;
 
 };

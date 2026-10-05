@@ -26,5 +26,5 @@ class Department {
 		 * @brief Получить название департамента
 		 * @return название департамента
 		 */
-		const std::string getName() const noexcept;
+		const std::string& getName() const noexcept;
 };

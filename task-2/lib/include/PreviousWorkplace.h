@@ -39,19 +39,19 @@ class PreviousWorkplace {
 		 * @brief Получить имя компании
 		 * @return имя компании
 		 */
-		std::string getCompany() const noexcept;
+		const std::string& getCompany() const noexcept;
 
 		/**
 		 * @brief Получить должность
 		 * @return должность
 		 */
-		std::string getPosition() const noexcept;
+		const std::string& getPosition() const noexcept;
 
 		/**
 		 * @brief получить период работы
 		 * @return период работы
 		 */
-		std::string getPeriod() const noexcept;
+		const std::string& getPeriod() const noexcept;
 
 		/**
 		 * @brief получить строку с предыдущим местом работы

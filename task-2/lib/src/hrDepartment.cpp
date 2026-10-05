@@ -10,6 +10,8 @@ HRDepartment::~HRDepartment() {
 }
 
 void HRDepartment::addPerson(Person* person) {
+	if (!person) return;
+	if (std::find(people.begin(), people.end(), person) != people.end()) return;
 	people.push_back(person);
 }
 

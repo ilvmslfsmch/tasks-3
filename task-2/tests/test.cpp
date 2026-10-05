@@ -7,7 +7,6 @@
 #include "../lib/include/Department.h"
 #include "../lib/include/PreviousWorkplace.h"
 
-#include <memory>
 #include <string>
 
 TEST(PersonTest, Getters) {
@@ -138,7 +137,7 @@ template <typename Predicate>
 static int countEmployeesWhere(const HRDepartment& hr, Predicate pred) {
     int cnt = 0;
     for (const auto& p : hr.getPeople()) {
-        auto emp = dynamic_cast<Employee*>(p.get());
+        auto emp = dynamic_cast<Employee*>(p);
         if (emp && pred(emp)) ++cnt;
     }
     return cnt;
@@ -148,8 +147,7 @@ TEST(HRDepartmentTest, AddAndGetPeople) {
     HRDepartment hr;
     EXPECT_TRUE(hr.getPeople().empty());
 
-    auto p = std::make_unique<Person>("Иванов Иван Иванович", "12.03.1985");
-    hr.addPerson(std::move(p));
+    hr.addPerson(new Person("Иванов Иван Иванович", "12.03.1985"));
 
     EXPECT_EQ(hr.getPeople().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
@@ -158,10 +156,10 @@ TEST(HRDepartmentTest, AddAndGetPeople) {
 TEST(HRDepartmentTest, FindByFullName) {
     HRDepartment hr;
 
-    hr.addPerson(std::make_unique<Employee>(
+    hr.addPerson(new Employee(
         "Иванов Иван Иванович", "12.03.1985",
         Position("Программист"), Department("IT"), 1.0));
-    hr.addPerson(std::make_unique<Employee>(
+    hr.addPerson(new Employee(
         "Петрова Анна Петровна", "10.12.1960",
         Position("Бухгалтер"), Department("Бухгалтерия"), 0.5));
 
@@ -174,31 +172,31 @@ TEST(HRDepartmentTest, Filters) {
     HRDepartment hr;
 
     // 1) программист с ребёнком
-    auto e1 = std::make_unique<Employee>(
+    Employee* e1 = new Employee(
         "Иванов Иван Иванович", "12.03.1985",
         Position("Программист"), Department("IT"), 1.0);
     e1->addChildId(100);
 
     // 2) пенсионер
-    auto e2 = std::make_unique<Employee>(
+    Employee* e2 = new Employee(
         "Петрова Анна Петровна", "10.12.1960",
         Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
     e2->setFlags(true, false, false, false);
 
     // 3) программист в декрете
-    auto e3 = std::make_unique<Employee>(
+    Employee* e3 = new Employee(
         "Сидорова Мария Петровна", "21.11.1986",
         Position("Программист"), Department("IT"), 1.0);
     e3->setFlags(false, false, false, true);
     e3->addChildId(100);
 
     // 4) ребёнок
-    auto child = std::make_unique<Person>("Иванов Пётр Иванович", "29.10.2007");
+    Person* child = new Person("Иванов Пётр Иванович", "29.10.2007");
 
-    hr.addPerson(std::move(e1));
-    hr.addPerson(std::move(e2));
-    hr.addPerson(std::move(e3));
-    hr.addPerson(std::move(child));
+    hr.addPerson(e1);
+    hr.addPerson(e2);
+    hr.addPerson(e3);
+    hr.addPerson(child);
 
     EXPECT_EQ(hr.getPeople().size(), 4u);
 
@@ -215,8 +213,8 @@ TEST(HRDepartmentTest, Filters) {
 TEST(HRDepartmentTest, Polymorphism) {
     HRDepartment hr;
 
-    hr.addPerson(std::make_unique<Person>("Иванов Пётр Иванович", "29.10.2007"));
-    hr.addPerson(std::make_unique<Employee>(
+    hr.addPerson(new Person("Иванов Пётр Иванович", "29.10.2007"));
+    hr.addPerson(new Employee(
         "Иванов Иван Иванович", "12.03.1985",
         Position("Программист"), Department("IT"), 1.0));
 
@@ -225,15 +223,15 @@ TEST(HRDepartmentTest, Polymorphism) {
     int employeesCount = 0;
     int personsCount = 0;
     for (const auto& p : hr.getPeople()) {
-        if (dynamic_cast<Employee*>(p.get())) ++employeesCount;
-        else                                  ++personsCount;
+        if (dynamic_cast<Employee*>(p)) ++employeesCount;
+        else                            ++personsCount;
     }
     EXPECT_EQ(employeesCount, 1);
     EXPECT_EQ(personsCount,   1);
 
     for (const auto& p : hr.getPeople()) {
         std::string info = p->getInfo();
-        auto emp = dynamic_cast<Employee*>(p.get());
+        auto emp = dynamic_cast<Employee*>(p);
         if (emp) {
             EXPECT_NE(info.find("Программист"), std::string::npos);
         } else {
