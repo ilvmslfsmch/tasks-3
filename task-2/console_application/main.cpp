@@ -30,7 +30,7 @@ int main(void) {
 	}
 	hr.addPerson(std::move(e1));
 
-	std::uinque_ptr<Employee> e2 = std::make_unique<Employee>("Петрова Анна Петровна", "10.12.1960", Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
+	std::unique_ptr<Employee> e2 = std::make_unique<Employee>("Петрова Анна Петровна", "10.12.1960", Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
 	e2->setFlags(true, false, true, false);
 	hr.addPerson(std::move(e2));
 
