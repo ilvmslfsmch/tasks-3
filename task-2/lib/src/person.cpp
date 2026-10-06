@@ -1,16 +1,10 @@
 #include "../include/Person.h"
 #include <utility>
 
-int Person::nextId = 1;
+Person::Person() : id(0) {}
 
-Person::Person() : id(nextId++) {}
-
-Person::Person(const std::string& fullName, const std::string& birthDate) : id(nextId++), fullName(fullName), birthDate(birthDate) {}
-Person::Person(const int id, const std::string& fullName, const std::string& birthDate) : id(id), fullName(fullName), birthDate(birthDate) {
-	if (id >= nextId) {
-		nextId = id + 1;
-	}
-}
+Person::Person(const int id, const std::string& fullName, const std::string& birthDate)
+	: id(id), fullName(fullName), birthDate(birthDate) {}
 
 int Person::getId() const noexcept {return id;}
 

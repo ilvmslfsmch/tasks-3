@@ -22,11 +22,6 @@ class Person {
 		 */
 		std::string birthDate;
 
-		/**
-		 * @brief счётчик для ID
-		 */
-		static int nextId;
-
 	public:
 		/**
 		 * @brief Конструктор по умолчанию
@@ -35,13 +30,6 @@ class Person {
 
 		/**
 		 * @brief Конструктор
-		 * @param fullName - ФИО
-		 * @param birthDate - дата рождения
-		 */
-		Person(const std::string& fullName, const std::string& birthDate);
-
-		/**
-		 * @brief Конструктор с явным ID
 		 * @param id - id человека
 		 * @param fullName - ФИО
 		 * @param birthDate - дата рождения
