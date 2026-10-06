@@ -3,15 +3,11 @@
 #include <map>
 #include <algorithm>
 
-HRDepartment::~HRDepartment() {
-	for (Person* p : people) {
-		delete p;
-	}
-}
-
-void HRDepartment::addPerson(Person* person) {
-	if (!person) return;
-	if (std::find(people.begin(), people.end(), person) != people.end()) return;
+void HRDepartment::addPerson(const Person& person) {
+	auto it = std::find_if(people.begin(), people.end(), [&person](const Person& p) {
+		return p.getId() == person.getId();
+	});
+	if (it != people.end()) return;
 	people.push_back(person);
 }
 
@@ -23,19 +19,19 @@ void HRDepartment::addPosition(const Position& position) {
 	positions.push_back(position);
 }
 
-const std::vector<Person*>& HRDepartment::getPeople() const noexcept {
+const std::vector<Person>& HRDepartment::getPeople() const noexcept {
 	return people;
 }
 
 void HRDepartment::printAll() const {
-	for (Person* p : people) {
-		std::cout << p->getInfo() << std::endl;
+	for (const Person& p : people) {
+		std::cout << p.getInfo() << std::endl;
 	}
 }
 
 void HRDepartment::printByPosition(const std::string& positionTitle) const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->getPosition().getTitle() == positionTitle) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -43,8 +39,8 @@ void HRDepartment::printByPosition(const std::string& positionTitle) const {
 }
 
 void HRDepartment::printByRate(const double rate) const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->getRate() == rate) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -52,8 +48,8 @@ void HRDepartment::printByRate(const double rate) const {
 }
 
 void HRDepartment::printWithChildren() const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->hasChildren()) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -61,8 +57,8 @@ void HRDepartment::printWithChildren() const {
 }
 
 void HRDepartment::printPensioners() const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->isPensioner()) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -70,8 +66,8 @@ void HRDepartment::printPensioners() const {
 }
 
 void HRDepartment::printDisabled() const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->isDisabled()) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -79,8 +75,8 @@ void HRDepartment::printDisabled() const {
 }
 
 void HRDepartment::printOnVacation() const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->isOnVacation()) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -88,8 +84,8 @@ void HRDepartment::printOnVacation() const {
 }
 
 void HRDepartment::printOnMaternityLeave() const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp && emp->isOnMaternityLeave()) {
 			std::cout << emp->getInfo() << std::endl;
 		}
@@ -98,8 +94,8 @@ void HRDepartment::printOnMaternityLeave() const {
 
 void HRDepartment::printPositionInfo() const {
 	std::map<std::string, int> counter;
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (emp) {
 			counter[emp->getPosition().getTitle()]++;
 		}
@@ -110,8 +106,8 @@ void HRDepartment::printPositionInfo() const {
 }
 
 void HRDepartment::printPreviousWorkplaces() const {
-	for (Person* p : people) {
-		Employee* emp = dynamic_cast<Employee*>(p);
+	for (const Person& p : people) {
+		const Employee* emp = dynamic_cast<const Employee*>(&p);
 		if (!emp) continue;
 		std::cout << emp->getFullName() << ":" << std::endl;
 		for (const PreviousWorkplace& wp : emp->getPreviousWorkplaces()) {
@@ -121,36 +117,36 @@ void HRDepartment::printPreviousWorkplaces() const {
 }
 
 void HRDepartment::printByFullName(const std::string& fullName) const {
-	std::vector<Person*>::const_iterator it = std::find_if(people.begin(), people.end(), [&fullName](const Person* p) {
-				return p->getFullName() == fullName;
+	std::vector<Person>::const_iterator it = std::find_if(people.begin(), people.end(), [&fullName](const Person& p) {
+				return p.getFullName() == fullName;
 			});
 	if (it != people.end()) {
-		std::cout << (*it)->getInfo() << std::endl;
+		std::cout << it->getInfo() << std::endl;
 	} else {
 		std::cout << "Сотрудник не найден" << std::endl;
 	}
 }
 
 void HRDepartment::printChildrenOf(const int parentId) const {
-	std::vector<Person*>::const_iterator parentIt = std::find_if(people.begin(), people.end(), [parentId](const Person* p) {
-				return p->getId() == parentId;
+	std::vector<Person>::const_iterator parentIt = std::find_if(people.begin(), people.end(), [parentId](const Person& p) {
+				return p.getId() == parentId;
 			});
 	if (parentIt == people.end()) {
 		std::cout << "Родитель не найден" << std::endl;
 		return;
 	}
-	Employee* emp = dynamic_cast<Employee*>(*parentIt);
+	const Employee* emp = dynamic_cast<const Employee*>(&(*parentIt));
 	if (!emp) {
 		std::cout << "Это не сотрудник" << std::endl;
 		return;
 	}
 	std::cout << "Дети: " << emp->getFullName() << std::endl;
 	for (int childId : emp->getChildrenIds()) {
-		std::vector<Person*>::const_iterator childIt = std::find_if(people.begin(), people.end(), [childId](const Person* p) {
-					return p->getId() == childId;
+		std::vector<Person>::const_iterator childIt = std::find_if(people.begin(), people.end(), [childId](const Person& p) {
+					return p.getId() == childId;
 				});
 		if (childIt != people.end()) {
-			std::cout << (*childIt)->getInfo() << std::endl;
+			std::cout << childIt->getInfo() << std::endl;
 		}
 	}
 }

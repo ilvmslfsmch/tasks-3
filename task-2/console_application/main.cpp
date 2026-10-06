@@ -17,27 +17,27 @@ int main(void) {
 	hr.addPosition(Position("Бухгалтер"));
 	hr.addPosition(Position("HR-менеджер"));
 
-	Employee* e1 = new Employee("Иванов Иван Иванович", "12.03.1985",  Position("Программист"), Department("IT"), 1.0);
-	int e1Id = e1->getId();
-	e1->setFlags(false, true, false, true);
-	e1->addPreviousWorkplace(PreviousWorkplace("ООО Ромашка", "Junior", "2010-2013"));
-	e1->addPreviousWorkplace(PreviousWorkplace("ЗАО лютик", "Middle", "2013-2020"));
+	Employee e1("Иванов Иван Иванович", "12.03.1985",  Position("Программист"), Department("IT"), 1.0);
+	int e1Id = e1.getId();
+	e1.setFlags(false, true, false, true);
+	e1.addPreviousWorkplace(PreviousWorkplace("ООО Ромашка", "Junior", "2010-2013"));
+	e1.addPreviousWorkplace(PreviousWorkplace("ЗАО лютик", "Middle", "2013-2020"));
 	int childId = 0;
 	{
-		Person* child = new Person("Иванов Пётр Иванович", "29.10.2007");
-		childId = child->getId();
-		e1->addChildId(childId);
+		Person child("Иванов Пётр Иванович", "29.10.2007");
+		childId = child.getId();
+		e1.addChildId(childId);
 		hr.addPerson(child);
 	}
 	hr.addPerson(e1);
 
-	Employee* e2 = new Employee("Петрова Анна Петровна", "10.12.1960", Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
-	e2->setFlags(true, false, true, false);
+	Employee e2("Петрова Анна Петровна", "10.12.1960", Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
+	e2.setFlags(true, false, true, false);
 	hr.addPerson(e2);
 
-	Employee* e3 = new Employee("Сидорова Мария Петровна", "21.11.1986", Position("Программист"), Department("IT"), 1.0);
-	e3->addChildId(childId);
-	e3->setFlags(false, false, false, true);
+	Employee e3("Сидорова Мария Петровна", "21.11.1986", Position("Программист"), Department("IT"), 1.0);
+	e3.addChildId(childId);
+	e3.setFlags(false, false, false, true);
 	hr.addPerson(e3);
 
 	std::cout << "Все люди:" << std::endl;

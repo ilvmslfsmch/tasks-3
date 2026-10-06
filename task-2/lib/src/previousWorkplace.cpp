@@ -1,7 +1,7 @@
 #include "../include/PreviousWorkplace.h"
 #include <utility>
 
-PreviousWorkplace::PreviousWorkplace(const std::string company, const std::string position, const std::string period) : company(company), position(position), period(period) {}
+PreviousWorkplace::PreviousWorkplace(const std::string& company, const std::string& position, const std::string& period) : company(company), position(position), period(period) {}
 
 const std::string& PreviousWorkplace::getCompany() const noexcept {return company;}
 

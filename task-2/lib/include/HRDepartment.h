@@ -11,9 +11,9 @@
 class HRDepartment {
 	private:
 		/**
-		 * @brief Массив указателей на сотрудников
+		 * @brief Массив сотрудников
 		 */
-		std::vector<Person*> people;
+		std::vector<Person> people;
 
 		/**
 		 * @brief Массив департаментов
@@ -34,37 +34,13 @@ class HRDepartment {
 		/**
 		 * @brief Деструктор
 		 */
-		~HRDepartment();
-
-		/**
-		* @brief Запрет копирования
-		* @note Запреты нужны, так как класс владеет Person через сырые указатели
-		* @note Копирование (явное/неявное) приведёт к двойному удалению
-		* @note Дальше по той же причине.
-		*/
-		HRDepartment(const HRDepartment&) = delete;
-
-		/**
-		* @brief Запрет присваивания копированием
-		*/
-		HRDepartment& operator=(const HRDepartment&) = delete;
-
-		/**
-		* @brief Запрет перемещения
-		* @note Для единообразия: раз не копируем, то и не перемешаем
-		*/
-		HRDepartment(HRDepartment&&) = delete;
-
-		/**
-		* @brief Запрет присваивания перемещением
-		*/
-		HRDepartment& operator=(HRDepartment&&) = delete;
+		~HRDepartment() = default;
 
 		/**
 		 * @brief Добавить нового сотрудника
-		 * @param person - указатель на сотрудника
+		 * @param person - сотрудник
 		 */
-		void addPerson(Person* person);
+		void addPerson(const Person& person);
 
 		/**
 		 * @brief Добавить отдел
@@ -82,7 +58,7 @@ class HRDepartment {
 		 * @brief Получить список сотрудников в отделе
 		 * @return ссылку на массив сотрудников
 		 */
-		const std::vector<Person*>& getPeople() const noexcept;
+		const std::vector<Person>& getPeople() const noexcept;
 
 		/**
 		 * @brief Вывести всех сотрудников

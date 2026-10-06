@@ -22,7 +22,7 @@ class Position {
 		 * @brief Конструктор
 		 * @param title - название должности
 		 */
-		explicit Position(const std::string title);
+		explicit Position(const std::string& title);
 
 		/**
 		 * @brief получить название должности
