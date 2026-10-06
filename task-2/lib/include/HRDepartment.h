@@ -11,9 +11,14 @@
 class HRDepartment {
 	private:
 		/**
-		 * @brief Массив сотрудников
+		 * @brief Массив людей
 		 */
 		std::vector<Person> people;
+
+		/**
+		 * @brief Массив сотрудников
+		 */
+		std::vector<Employee> employees;
 
 		/**
 		 * @brief Массив департаментов
@@ -24,6 +29,13 @@ class HRDepartment {
 		 * @brief Массив должностей
 		 */
 		std::vector<Position> positions;
+
+		/**
+		 * @brief Проверить наличие человека с данным ID в отделе
+		 * @param id - ID человека
+		 * @return true, если человек с таким ID уже есть
+		 */
+		bool containsId(const int id) const;
 	public:
 
 		/**
@@ -37,10 +49,22 @@ class HRDepartment {
 		~HRDepartment() = default;
 
 		/**
-		 * @brief Добавить нового сотрудника
-		 * @param person - сотрудник
+		 * @brief Добавить человека
+		 * @param person - человек
 		 */
 		void addPerson(const Person& person);
+
+		/**
+		 * @brief Добавить сотрудника
+		 * @param employee - сотрудник
+		 */
+		void addPerson(const Employee& employee);
+
+		/**
+		 * @brief Добавить сотрудника
+		 * @param employee - сотрудник
+		 */
+		void addEmployee(const Employee& employee);
 
 		/**
 		 * @brief Добавить отдел
@@ -55,10 +79,16 @@ class HRDepartment {
 		void addPosition(const Position& position);
 
 		/**
-		 * @brief Получить список сотрудников в отделе
-		 * @return ссылку на массив сотрудников
+		 * @brief Получить список людей
+		 * @return ссылку на массив людей
 		 */
 		const std::vector<Person>& getPeople() const noexcept;
+
+		/**
+		 * @brief Получить список сотрудников
+		 * @return ссылку на массив сотрудников
+		 */
+		const std::vector<Employee>& getEmployees() const noexcept;
 
 		/**
 		 * @brief Вывести всех сотрудников

@@ -130,17 +130,40 @@ static bool hrHasFullName(const HRDepartment& hr, const std::string& fullName) {
     for (const auto& p : hr.getPeople()) {
         if (p.getFullName() == fullName) return true;
     }
+    for (const auto& e : hr.getEmployees()) {
+        if (e.getFullName() == fullName) return true;
+    }
     return false;
+}
+
+template <typename Predicate>
+static int countEmployeesWhere(const HRDepartment& hr, Predicate pred) {
+    int cnt = 0;
+    for (const auto& e : hr.getEmployees()) {
+        if (pred(e)) ++cnt;
+    }
+    return cnt;
 }
 
 TEST(HRDepartmentTest, AddAndGetPeople) {
     HRDepartment hr;
     EXPECT_TRUE(hr.getPeople().empty());
+    EXPECT_TRUE(hr.getEmployees().empty());
 
-    hr.addPerson(Person("Иванов Иван Иванович", "12.03.1985"));
+    Person p("Иванов Иван Иванович", "12.03.1985");
+    hr.addPerson(p);
+    hr.addPerson(p); // повторное добавление того же ID
 
     EXPECT_EQ(hr.getPeople().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
+
+    Employee e("Петров Пётр Петрович", "01.01.1990", Position("Бухгалтер"), Department("Бухгалтерия"), 1.0);
+    hr.addPerson(e);
+    hr.addPerson(e); // повторное добавление того же ID сотрудника
+    hr.addEmployee(e); // и через addEmployee
+
+    EXPECT_EQ(hr.getEmployees().size(), 1u);
+    EXPECT_TRUE(hrHasFullName(hr, "Петров Пётр Петрович"));
 }
 
 TEST(HRDepartmentTest, FindByFullName) {
@@ -153,6 +176,7 @@ TEST(HRDepartmentTest, FindByFullName) {
         "Петрова Анна Петровна", "10.12.1960",
         Position("Бухгалтер"), Department("Бухгалтерия"), 0.5));
 
+    EXPECT_EQ(hr.getEmployees().size(), 2u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
     EXPECT_TRUE(hrHasFullName(hr, "Петрова Анна Петровна"));
     EXPECT_FALSE(hrHasFullName(hr, "Несуществующий Сотрудник"));
@@ -188,30 +212,21 @@ TEST(HRDepartmentTest, Filters) {
     hr.addPerson(e3);
     hr.addPerson(child);
 
-    EXPECT_EQ(hr.getPeople().size(), 4u);
+    EXPECT_EQ(hr.getEmployees().size(), 3u);
+    EXPECT_EQ(hr.getPeople().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
     EXPECT_TRUE(hrHasFullName(hr, "Петрова Анна Петровна"));
     EXPECT_TRUE(hrHasFullName(hr, "Сидорова Мария Петровна"));
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Пётр Иванович"));
 
-    // Проверка фильтрации по свойствам сотрудников
-    std::vector<Employee> employees = {e1, e2, e3};
-    auto countWhere = [&](auto pred) {
-        int cnt = 0;
-        for (const auto& emp : employees) {
-            if (pred(emp)) ++cnt;
-        }
-        return cnt;
-    };
-
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.getPosition().getTitle() == "Программист"; }), 2);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.getPosition().getTitle() == "Бухгалтер"; }),   1);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.getRate() == 0.5; }),                         1);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.hasChildren(); }),                            2);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.isPensioner(); }),                            1);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.isOnMaternityLeave(); }),                     1);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.isDisabled(); }),                             0);
-    EXPECT_EQ(countWhere([](const Employee& e){ return e.isOnVacation(); }),                           0);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.getPosition().getTitle() == "Программист"; }), 2);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.getPosition().getTitle() == "Бухгалтер"; }),   1);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.getRate() == 0.5; }),                         1);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.hasChildren(); }),                            2);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.isPensioner(); }),                            1);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.isOnMaternityLeave(); }),                     1);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.isDisabled(); }),                             0);
+    EXPECT_EQ(countEmployeesWhere(hr, [](const Employee& e){ return e.isOnVacation(); }),                           0);
 }
 
 TEST(HRDepartmentTest, Polymorphism) {
@@ -235,7 +250,8 @@ TEST(HRDepartmentTest, Polymorphism) {
     hr.addPerson(p);
     hr.addPerson(e);
 
-    ASSERT_EQ(hr.getPeople().size(), 2u);
+    EXPECT_EQ(hr.getPeople().size(), 1u);
+    EXPECT_EQ(hr.getEmployees().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Пётр Иванович"));
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
 }
