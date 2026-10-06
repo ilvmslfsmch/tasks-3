@@ -3,7 +3,7 @@
 
 int Person::nextId = 1;
 
-Person::Person() : id(0) {}
+Person::Person() : id(nextId++) {}
 
 Person::Person(const std::string& fullName, const std::string& birthDate, const int id)
 	: id(id > 0 ? id : nextId++), fullName(fullName), birthDate(birthDate) {

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 #include "../lib/include/HRDepartment.h"
 
 /**
@@ -29,16 +28,16 @@ int main(void) {
 		e1.addChildId(childId);
 		hr.addPerson(child);
 	}
-	hr.addPerson(e1);
+	hr.addEmployee(e1);
 
 	Employee e2("Петрова Анна Петровна", "10.12.1960", Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
 	e2.setFlags(true, false, true, false);
-	hr.addPerson(e2);
+	hr.addEmployee(e2);
 
 	Employee e3("Сидорова Мария Петровна", "21.11.1986", Position("Программист"), Department("IT"), 1.0);
 	e3.addChildId(childId);
 	e3.setFlags(false, false, false, true);
-	hr.addPerson(e3);
+	hr.addEmployee(e3);
 
 	std::cout << "Все люди:" << std::endl;
 	hr.printAll();

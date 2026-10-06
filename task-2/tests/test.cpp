@@ -312,3 +312,13 @@ TEST(EmployeeTest, ConstructorWithExplicitId) {
     EXPECT_EQ(e.getPosition().getTitle(), "DevOps");
     EXPECT_EQ(e.getDepartment().getName(), "IT");
 }
+
+TEST(PersonTest, DefaultConstructorHasValidId) {
+    Person p;
+    EXPECT_GT(p.getId(), 0);
+}
+
+TEST(EmployeeTest, DefaultConstructorHasValidId) {
+    Employee e;
+    EXPECT_GT(e.getId(), 0);
+}
