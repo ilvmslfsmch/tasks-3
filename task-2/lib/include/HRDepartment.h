@@ -49,8 +49,8 @@ class HRDepartment {
 		~HRDepartment() = default;
 
 		/**
-		 * @brief Добавить человека
-		 * @param person - человек
+		 * @brief Добавить ребёнка
+		 * @param person - ребёнок
 		 */
 		void addPerson(const Person& person);
 

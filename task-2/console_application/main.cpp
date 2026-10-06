@@ -5,7 +5,7 @@
  * @brief Точка входа в программу
  * @return 0, если программа выполнена корректно
  */
-int main(void) {
+int main() {
 	HRDepartment hr;
 
 	hr.addDepartment(Department("IT"));
