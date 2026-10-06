@@ -11,20 +11,20 @@
 #include <algorithm>
 
 TEST(PersonTest, Getters) {
-    Person p(1, "Иванов Иван Иванович", "12.03.1985");
+    Person p("Иванов Иван Иванович", "12.03.1985");
 
-    EXPECT_EQ(p.getId(), 1);
+    EXPECT_GT(p.getId(), 0);
     EXPECT_EQ(p.getFullName(), "Иванов Иван Иванович");
     EXPECT_EQ(p.getBirthDate(), "12.03.1985");
 }
 
 TEST(PersonTest, GetInfo) {
-    Person p(1, "Иванов Иван Иванович", "12.03.1985");
+    Person p("Иванов Иван Иванович", "12.03.1985");
     std::string info = p.getInfo();
 
     EXPECT_NE(info.find("Иванов Иван Иванович"), std::string::npos);
     EXPECT_NE(info.find("12.03.1985"), std::string::npos);
-    EXPECT_NE(info.find("ID: 1"), std::string::npos);
+    EXPECT_NE(info.find("ID:"), std::string::npos);
 }
 
 TEST(PositionTest, GetTitle) {
@@ -52,10 +52,10 @@ TEST(PreviousWorkplaceTest, GettersAndToString) {
 
 
 TEST(EmployeeTest, Getters) {
-    Employee e(1, "Петрова Анна Петровна", "10.12.1960",
+    Employee e("Петрова Анна Петровна", "10.12.1960",
                Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
 
-    EXPECT_EQ(e.getId(), 1);
+    EXPECT_GT(e.getId(), 0);
     EXPECT_EQ(e.getFullName(), "Петрова Анна Петровна");
     EXPECT_EQ(e.getBirthDate(), "10.12.1960");
     EXPECT_EQ(e.getPosition().getTitle(), "Бухгалтер");
@@ -64,7 +64,7 @@ TEST(EmployeeTest, Getters) {
 }
 
 TEST(EmployeeTest, DefaultFlagsAreFalse) {
-    Employee e(1, "Иванов Иван Иванович", "12.03.1985",
+    Employee e("Иванов Иван Иванович", "12.03.1985",
                Position("Программист"), Department("IT"), 1.0);
 
     EXPECT_FALSE(e.isPensioner());
@@ -75,7 +75,7 @@ TEST(EmployeeTest, DefaultFlagsAreFalse) {
 }
 
 TEST(EmployeeTest, SetFlags) {
-    Employee e(1, "Иванов Иван Иванович", "12.03.1985",
+    Employee e("Иванов Иван Иванович", "12.03.1985",
                Position("Программист"), Department("IT"), 1.0);
 
     e.setFlags(true, false, true, false);
@@ -87,7 +87,7 @@ TEST(EmployeeTest, SetFlags) {
 }
 
 TEST(EmployeeTest, Children) {
-    Employee e(1, "Сидорова Мария Петровна", "21.11.1986",
+    Employee e("Сидорова Мария Петровна", "21.11.1986",
                Position("Программист"), Department("IT"), 1.0);
 
     EXPECT_FALSE(e.hasChildren());
@@ -102,7 +102,7 @@ TEST(EmployeeTest, Children) {
 }
 
 TEST(EmployeeTest, PreviousWorkplaces) {
-    Employee e(1, "Иванов Иван Иванович", "12.03.1985",
+    Employee e("Иванов Иван Иванович", "12.03.1985",
                Position("Программист"), Department("IT"), 1.0);
 
     EXPECT_TRUE(e.getPreviousWorkplaces().empty());
@@ -116,7 +116,7 @@ TEST(EmployeeTest, PreviousWorkplaces) {
 }
 
 TEST(EmployeeTest, GetInfoContainsFields) {
-    Employee e(1, "Иванов Иван Иванович", "12.03.1985",
+    Employee e("Иванов Иван Иванович", "12.03.1985",
                Position("Программист"), Department("IT"), 1.0);
     e.setFlags(false, false, false, true);
 
@@ -153,14 +153,14 @@ TEST(HRDepartmentTest, AddAndGetPeople) {
     EXPECT_TRUE(hr.getPeople().empty());
     EXPECT_TRUE(hr.getEmployees().empty());
 
-    Person p(1, "Иванов Иван Иванович", "12.03.1985");
+    Person p("Иванов Иван Иванович", "12.03.1985");
     hr.addPerson(p);
     hr.addPerson(p); // повторное добавление того же ID
 
     EXPECT_EQ(hr.getPeople().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
 
-    Employee e(2, "Петров Пётр Петрович", "01.01.1990", Position("Бухгалтер"), Department("Бухгалтерия"), 1.0);
+    Employee e("Петров Пётр Петрович", "01.01.1990", Position("Бухгалтер"), Department("Бухгалтерия"), 1.0);
     hr.addPerson(e);
     hr.addPerson(e); // повторное добавление того же ID сотрудника
     hr.addEmployee(e); // и через addEmployee
@@ -173,10 +173,10 @@ TEST(HRDepartmentTest, FindByFullName) {
     HRDepartment hr;
 
     hr.addPerson(Employee(
-        1, "Иванов Иван Иванович", "12.03.1985",
+        "Иванов Иван Иванович", "12.03.1985",
         Position("Программист"), Department("IT"), 1.0));
     hr.addPerson(Employee(
-        2, "Петрова Анна Петровна", "10.12.1960",
+        "Петрова Анна Петровна", "10.12.1960",
         Position("Бухгалтер"), Department("Бухгалтерия"), 0.5));
 
     EXPECT_EQ(hr.getEmployees().size(), 2u);
@@ -190,25 +190,25 @@ TEST(HRDepartmentTest, Filters) {
 
     // 1) программист с ребёнком
     Employee e1(
-        1, "Иванов Иван Иванович", "12.03.1985",
+        "Иванов Иван Иванович", "12.03.1985",
         Position("Программист"), Department("IT"), 1.0);
-    e1.addChildId(4);
 
     // 2) пенсионер
     Employee e2(
-        2, "Петрова Анна Петровна", "10.12.1960",
+        "Петрова Анна Петровна", "10.12.1960",
         Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
     e2.setFlags(true, false, false, false);
 
     // 3) программист в декрете
     Employee e3(
-        3, "Сидорова Мария Петровна", "21.11.1986",
+        "Сидорова Мария Петровна", "21.11.1986",
         Position("Программист"), Department("IT"), 1.0);
     e3.setFlags(false, false, false, true);
-    e3.addChildId(4);
 
     // 4) ребёнок
-    Person child(4, "Иванов Пётр Иванович", "29.10.2007");
+    Person child("Иванов Пётр Иванович", "29.10.2007");
+    e1.addChildId(child.getId());
+    e3.addChildId(child.getId());
 
     hr.addPerson(e1);
     hr.addPerson(e2);
@@ -233,9 +233,9 @@ TEST(HRDepartmentTest, Filters) {
 }
 
 TEST(HRDepartmentTest, Polymorphism) {
-    Person p(1, "Иванов Пётр Иванович", "29.10.2007");
+    Person p("Иванов Пётр Иванович", "29.10.2007");
     Employee e(
-        2, "Иванов Иван Иванович", "12.03.1985",
+        "Иванов Иван Иванович", "12.03.1985",
         Position("Программист"), Department("IT"), 1.0);
 
     // Проверка полиморфизма через ссылки
@@ -281,16 +281,16 @@ TEST(HRDepartmentTest, DepartmentsAndPositionsDeduplication) {
 
 TEST(HRDepartmentTest, DuplicateIdRejected) {
     HRDepartment hr;
-    Person p1(1, "Иванов Иван", "01.01.2000");
-    Person p2(1, "Петров Петр", "02.02.2001");
+    Person p1("Иванов Иван", "01.01.2000", 100);
+    Person p2("Петров Петр", "02.02.2001", 100);
     hr.addPerson(p1);
     hr.addPerson(p2);
     EXPECT_EQ(hr.getPeople().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван"));
     EXPECT_FALSE(hrHasFullName(hr, "Петров Петр"));
 
-    Employee e1(2, "Сидоров Сидор", "03.03.1990", Position("IT"), Department("IT"), 1.0);
-    Employee e2(2, "Козлов Козма", "04.04.1991", Position("IT"), Department("IT"), 1.0);
+    Employee e1("Сидоров Сидор", "03.03.1990", Position("IT"), Department("IT"), 1.0, 200);
+    Employee e2("Козлов Козма", "04.04.1991", Position("IT"), Department("IT"), 1.0, 200);
     hr.addPerson(e1);
     hr.addPerson(e2);
     EXPECT_EQ(hr.getEmployees().size(), 1u);
@@ -299,14 +299,14 @@ TEST(HRDepartmentTest, DuplicateIdRejected) {
 }
 
 TEST(PersonTest, ConstructorWithExplicitId) {
-    Person p(42, "Сидоров Сидор", "01.01.2000");
+    Person p("Сидоров Сидор", "01.01.2000", 42);
     EXPECT_EQ(p.getId(), 42);
     EXPECT_EQ(p.getFullName(), "Сидоров Сидор");
     EXPECT_EQ(p.getBirthDate(), "01.01.2000");
 }
 
 TEST(EmployeeTest, ConstructorWithExplicitId) {
-    Employee e(99, "Кузнецов Кузьма", "05.05.1995", Position("DevOps"), Department("IT"), 1.0);
+    Employee e("Кузнецов Кузьма", "05.05.1995", Position("DevOps"), Department("IT"), 1.0, 99);
     EXPECT_EQ(e.getId(), 99);
     EXPECT_EQ(e.getFullName(), "Кузнецов Кузьма");
     EXPECT_EQ(e.getPosition().getTitle(), "DevOps");

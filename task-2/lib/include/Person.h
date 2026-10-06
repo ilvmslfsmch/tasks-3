@@ -8,6 +8,11 @@
 class Person {
 	protected:
 		/**
+		 * @brief Статический счетчик ID
+		 */
+		static int nextId;
+
+		/**
 		 * @brief id человека из списка
 		 */
 		int id;
@@ -30,11 +35,11 @@ class Person {
 
 		/**
 		 * @brief Конструктор
-		 * @param id - id человека
 		 * @param fullName - ФИО
 		 * @param birthDate - дата рождения
+		 * @param id - id человека (0 для автогенерации)
 		 */
-		Person(const int id, const std::string& fullName, const std::string& birthDate);
+		Person(const std::string& fullName, const std::string& birthDate, const int id = 0);
 
 		/**
 		 * @brief Виртуальный деструктор
