@@ -3,6 +3,7 @@
 Employee::Employee() : Person(), rate(1.0), pensioner(false), disabled(false), onVacation(false), onMaternityLeave(false) {}
 
 Employee::Employee(const std::string& fullName, const std::string& birthDate, const Position& position, const Department& department, const double rate) : Person(fullName, birthDate), position(position), department(department), rate(rate), pensioner(false), disabled(false), onVacation(false), onMaternityLeave(false) {}
+Employee::Employee(const int id, const std::string& fullName, const std::string& birthDate, const Position& position, const Department& department, const double rate) : Person(id, fullName, birthDate), position(position), department(department), rate(rate), pensioner(false), disabled(false), onVacation(false), onMaternityLeave(false) {}
 
 const Position& Employee::getPosition() const noexcept {return position;}
 

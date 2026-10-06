@@ -91,6 +91,18 @@ class HRDepartment {
 		const std::vector<Employee>& getEmployees() const noexcept;
 
 		/**
+		 * @brief Получить список отделов
+		 * @return ссылку на массив отделов
+		 */
+		const std::vector<Department>& getDepartments() const noexcept;
+
+		/**
+		 * @brief Получить список должностей
+		 * @return ссылку на массив должностей
+		 */
+		const std::vector<Position>& getPositions() const noexcept;
+
+		/**
 		 * @brief Вывести всех сотрудников
 		 */
 		void printAll() const;

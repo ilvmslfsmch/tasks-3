@@ -29,10 +29,18 @@ void HRDepartment::addEmployee(const Employee& employee) {
 }
 
 void HRDepartment::addDepartment(const Department& department) {
+	auto it = std::find_if(departments.begin(), departments.end(), [&department](const Department& d) {
+		return d.getName() == department.getName();
+	});
+	if (it != departments.end()) return;
 	departments.push_back(department);
 }
 
 void HRDepartment::addPosition(const Position& position) {
+	auto it = std::find_if(positions.begin(), positions.end(), [&position](const Position& p) {
+		return p.getTitle() == position.getTitle();
+	});
+	if (it != positions.end()) return;
 	positions.push_back(position);
 }
 
@@ -42,6 +50,14 @@ const std::vector<Person>& HRDepartment::getPeople() const noexcept {
 
 const std::vector<Employee>& HRDepartment::getEmployees() const noexcept {
 	return employees;
+}
+
+const std::vector<Department>& HRDepartment::getDepartments() const noexcept {
+	return departments;
+}
+
+const std::vector<Position>& HRDepartment::getPositions() const noexcept {
+	return positions;
 }
 
 void HRDepartment::printAll() const {

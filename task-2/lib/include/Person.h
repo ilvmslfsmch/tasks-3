@@ -41,6 +41,14 @@ class Person {
 		Person(const std::string& fullName, const std::string& birthDate);
 
 		/**
+		 * @brief Конструктор с явным ID
+		 * @param id - id человека
+		 * @param fullName - ФИО
+		 * @param birthDate - дата рождения
+		 */
+		Person(const int id, const std::string& fullName, const std::string& birthDate);
+
+		/**
 		 * @brief Виртуальный деструктор
 		 */
 		virtual ~Person() = default;

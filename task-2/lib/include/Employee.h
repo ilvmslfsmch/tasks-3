@@ -72,6 +72,17 @@ class Employee : public Person {
 		Employee(const std::string& fullName, const std::string& birthDate, const Position& position, const Department& department, const double rate);
 
 		/**
+		 * @brief Конструктор с явным ID
+		 * @param id - ID сотрудника
+		 * @param fullName - ФИО сотрудника
+		 * @param birthDate - дата рождения
+		 * @param position - должность
+		 * @param department - отдел
+		 * @param rate - ставка
+		 */
+		Employee(const int id, const std::string& fullName, const std::string& birthDate, const Position& position, const Department& department, const double rate);
+
+		/**
 		 * @brief Получить должность сотрудника
 		 * @return ссылку на должность
 		 */

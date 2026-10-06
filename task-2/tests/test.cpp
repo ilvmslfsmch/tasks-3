@@ -8,6 +8,7 @@
 #include "../lib/include/PreviousWorkplace.h"
 
 #include <string>
+#include <algorithm>
 
 TEST(PersonTest, Getters) {
     Person p("Иванов Иван Иванович", "12.03.1985");
@@ -127,13 +128,14 @@ TEST(EmployeeTest, GetInfoContainsFields) {
 
 // Вспомогательная функция: есть ли в HRDepartment человек с таким ФИО
 static bool hrHasFullName(const HRDepartment& hr, const std::string& fullName) {
-    for (const auto& p : hr.getPeople()) {
-        if (p.getFullName() == fullName) return true;
-    }
-    for (const auto& e : hr.getEmployees()) {
-        if (e.getFullName() == fullName) return true;
-    }
-    return false;
+    bool inPeople = std::any_of(hr.getPeople().begin(), hr.getPeople().end(), [&fullName](const Person& p) {
+        return p.getFullName() == fullName;
+    });
+    if (inPeople) return true;
+
+    return std::any_of(hr.getEmployees().begin(), hr.getEmployees().end(), [&fullName](const Employee& e) {
+        return e.getFullName() == fullName;
+    });
 }
 
 template <typename Predicate>
@@ -254,4 +256,39 @@ TEST(HRDepartmentTest, Polymorphism) {
     EXPECT_EQ(hr.getEmployees().size(), 1u);
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Пётр Иванович"));
     EXPECT_TRUE(hrHasFullName(hr, "Иванов Иван Иванович"));
+}
+
+TEST(HRDepartmentTest, DepartmentsAndPositionsDeduplication) {
+    HRDepartment hr;
+
+    hr.addDepartment(Department("IT"));
+    hr.addDepartment(Department("IT")); // дубликат
+    hr.addDepartment(Department("HR"));
+
+    EXPECT_EQ(hr.getDepartments().size(), 2u);
+    EXPECT_EQ(hr.getDepartments()[0].getName(), "IT");
+    EXPECT_EQ(hr.getDepartments()[1].getName(), "HR");
+
+    hr.addPosition(Position("Программист"));
+    hr.addPosition(Position("Программист")); // дубликат
+    hr.addPosition(Position("Бухгалтер"));
+
+    EXPECT_EQ(hr.getPositions().size(), 2u);
+    EXPECT_EQ(hr.getPositions()[0].getTitle(), "Программист");
+    EXPECT_EQ(hr.getPositions()[1].getTitle(), "Бухгалтер");
+}
+
+TEST(PersonTest, ConstructorWithExplicitId) {
+    Person p(42, "Сидоров Сидор", "01.01.2000");
+    EXPECT_EQ(p.getId(), 42);
+    EXPECT_EQ(p.getFullName(), "Сидоров Сидор");
+    EXPECT_EQ(p.getBirthDate(), "01.01.2000");
+}
+
+TEST(EmployeeTest, ConstructorWithExplicitId) {
+    Employee e(99, "Кузнецов Кузьма", "05.05.1995", Position("DevOps"), Department("IT"), 1.0);
+    EXPECT_EQ(e.getId(), 99);
+    EXPECT_EQ(e.getFullName(), "Кузнецов Кузьма");
+    EXPECT_EQ(e.getPosition().getTitle(), "DevOps");
+    EXPECT_EQ(e.getDepartment().getName(), "IT");
 }
