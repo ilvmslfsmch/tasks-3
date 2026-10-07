@@ -21,13 +21,11 @@ int main() {
 	e1.setFlags(false, true, false, true);
 	e1.addPreviousWorkplace(PreviousWorkplace("ООО Ромашка", "Junior", "2010-2013"));
 	e1.addPreviousWorkplace(PreviousWorkplace("ЗАО лютик", "Middle", "2013-2020"));
-	int childId = 0;
-	{
-		Person child("Иванов Пётр Иванович", "29.10.2007");
-		childId = child.getId();
-		e1.addChildId(childId);
-		hr.addPerson(child);
-	}
+	
+	Person child("Иванов Пётр Иванович", "29.10.2007");
+	int childId = child.getId();
+	e1.addChildId(childId);
+	hr.addPerson(child);
 	hr.addEmployee(e1);
 
 	Employee e2("Петрова Анна Петровна", "10.12.1960", Position("Бухгалтер"), Department("Бухгалтерия"), 0.5);
